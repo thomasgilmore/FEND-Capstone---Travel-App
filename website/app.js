@@ -15,10 +15,10 @@ let feelings = document.getElementById('feelings').value;
 getZip(baseURL,newZip, apiKey)
 
 .then(function(data){
-  console.log(data);
-  postData('/wheather', {temperature : data.main.temp, date: newDate, user_respone: feelings})
+  //console.log(data);
+  postData('/wheather', {temperature : data.main.temp, date: newDate, userResponse: feelings})
 
-  updateUI()
+  updateUI();
 });
 }
 
@@ -28,7 +28,7 @@ const getZip = async (baseURL, zip, key)=>{
   try {
 
     const data = await res.json();
-    console.log(data)
+    //console.log(data)
     return data;
   }  catch(error) {
     console.log("error", error);
@@ -37,7 +37,7 @@ const getZip = async (baseURL, zip, key)=>{
 }
 
 const postData = async (url='', data = {}) => {
-  console.log(data)
+  //console.log(data)
     const response = await fetch(url, {
       method: 'POST',
       credentials: 'same-origin',
@@ -49,7 +49,7 @@ const postData = async (url='', data = {}) => {
 
       try {
         const newData = await response.json();
-        console.log(newData);
+        //console.log(newData);
         return newData;
       }catch(error) {
         console.log("error", error);
@@ -57,13 +57,16 @@ const postData = async (url='', data = {}) => {
 }
 
 const updateUI = async () => {
-  const request = await fetch('/all');
+  const request = await fetch('/all2');
   try{
     const allData = await request.json();
     console.log(allData);
+    console.log(allData[0].temperature);
+    console.log(allData[0].date);
+    console.log(allData[0].userResponse)
     document.getElementById('temp').innerHTML = allData[0].temperature;
     document.getElementById('date').innerHTML = allData[0].date;
-    document.getElementById('content').innerHTML = allData[0].user_response;
+    document.getElementById('content').innerHTML = allData[0].userResponse;
 
   }catch(error){
     console.log("error", error);

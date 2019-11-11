@@ -27,10 +27,10 @@ const server = app.listen(port, listening);
   };
 
 // GET route
-app.get('/all', sendData);
+app.get('/all2', sendData);
 
-function sendData (request, response) {
-  response.send(projectData);
+function sendData (req, res) {
+  res.send(data);
 };
 
 // POST route
@@ -51,11 +51,18 @@ function addZip (req,res){
     mostRecentEntry = {
       temperature: req.body.temperature,
       date: req.body.date,
-      user_response: req.body.user_response
+      userResponse: req.body.userResponse,
     };
 
     data.push(mostRecentEntry);
     res.send(data);
     console.log(data);
 }
+
+app.post("/save", (req, res) => {
+  projectData.temp = req.body.temp;
+  projectData.date = req.body.date;
+  projectData.content = req.body.content;
+  res.end();
+});
 
