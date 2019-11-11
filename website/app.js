@@ -1,5 +1,4 @@
 /* Global Variables */
-const feelings = document.getElementById('feelings').value;
 
 // Create a new date instance dynamically with JS
 let d = new Date();
@@ -12,9 +11,17 @@ document.getElementById('generate').addEventListener('click', performAction);
 
 function performAction(e){
 const newZip =  document.getElementById('zip').value;
+let feelings = document.getElementById('feelings').value;
 getZip(baseURL,newZip, apiKey)
 
+.then(function(data){
+  console.log(data);
+  postData('/wheather', {temperature : data.main.temp, date: newDate, user_respone: feelings})
+
+  updateUI()
+});
 }
+
 const getZip = async (baseURL, zip, key)=>{
 
   const res = await fetch(baseURL+zip+key)
@@ -49,5 +56,16 @@ const postData = async (url='', data = {}) => {
       }
 }
 
-postData('/wheather', {city:' NYC', wheather: 50})
-console.log(feelings);
+const updateUI = async () => {
+  const request = await fetch('/all');
+  try{
+    const allData = await request.json();
+    console.log(allData);
+    document.getElementById('temp').innerHTML = allData[0].temperature;
+    document.getElementById('date').innerHTML = allData[0].date;
+    document.getElementById('content').innerHTML = allData[0].user_response;
+
+  }catch(error){
+    console.log("error", error);
+  }
+}

@@ -47,6 +47,15 @@ app.post('/wheather', addZip);
 
 function addZip (req,res){
     data.push(req.body);
+    //console.log(data);
+    mostRecentEntry = {
+      temperature: req.body.temperature,
+      date: req.body.date,
+      user_response: req.body.user_response
+    };
+
+    data.push(mostRecentEntry);
+    res.send(data);
     console.log(data);
-};
+}
 
