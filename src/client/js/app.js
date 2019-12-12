@@ -72,3 +72,6 @@ const updateUI = async () => {
     console.log("error", error);
   }
 }
+
+module.exports = performAction;
+module.exports = updateUI;
