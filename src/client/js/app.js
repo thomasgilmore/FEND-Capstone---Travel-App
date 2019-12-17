@@ -1,30 +1,40 @@
 /* Global Variables */
-
+let comma = ', ';
+let comma2 = ',';
 // Create a new date instance dynamically with JS
-let d = new Date();
-let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
+//let d = new Date();
+//let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
               
-let baseURL = 'http://api.openweathermap.org/data/2.5/weather?q=';
-let apiKey = '&appid=2bb66a089109955e2291e796e6a76439';
+let baseURL = 'http://api.geonames.org/searchJSON?q=';
+let apiKey = '&maxRows=10&username=tgilmore';
 
 document.getElementById('generate').addEventListener('click', performAction);
 
 function performAction(e){
-const newZip =  document.getElementById('zip').value;
-let feelings = document.getElementById('feelings').value;
-getZip(baseURL,newZip, apiKey)
+const location =  document.getElementById('location').value;
+let departingDate = document.getElementById('departing').value;
+getLocation(baseURL,location, apiKey)
 
 .then(function(data){
-  //console.log(data);
-  postData('/wheather', {temperature : data.main.temp, date: newDate, userResponse: feelings})
+  console.log(data);
+  console.log(data.geonames[0].lat);
+  console.log(data.geonames[0].lng);
+  console.log(data.geonames[0].name);
+  console.log(data.geonames[0].countryName);
+  postData('/wheather', {latitude : data.geonames[0].lat, longitude: data.geonames[0].lng, city: data.geonames[0].name, country: data.geonames[0].countryName, departingDate: departingDate})
+  let latitude = data.geonames[0].lat;
+  let longitude = data.geonames[0].lng;
+  let darkSky = 'https://api.darksky.net/forecast/3850f94f44aebe0584283d915ff18a45/';
+
+  getDarkSky(darkSky, latitude, comma2, longitude);
 
   updateUI();
 });
 }
 
-const getZip = async (baseURL, zip, key)=>{
+const getLocation = async (baseURL, location, key)=>{
 
-  const res = await fetch(baseURL+zip+key)
+  const res = await fetch(baseURL+location+key)
   try {
 
     const data = await res.json();
@@ -56,17 +66,37 @@ const postData = async (url='', data = {}) => {
       }
 }
 
+const getDarkSky = async (darkSky, latitude, comma2, longitude)=>{
+
+  const res2 = await fetch(darkSky+latitude+comma2+longitude)
+  
+  try {
+    
+    const data2 = await res2.json();
+    console.log(data2);
+    return data2;
+  }  catch(error) {
+    console.log("error", error);
+    // appropriately handle the error
+  }
+}
+
 const updateUI = async () => {
   const request = await fetch('/all2');
   try{
     const allData = await request.json();
     console.log(allData);
-    console.log(allData[0].temperature);
-    console.log(allData[0].date);
-    console.log(allData[0].userResponse)
-    document.getElementById('temp').innerHTML = allData[0].temperature;
-    document.getElementById('date').innerHTML = allData[0].date;
-    document.getElementById('content').innerHTML = allData[0].userResponse;
+    console.log(allData[0].latitude);
+    console.log(allData[0].longitude);
+    console.log(allData[0].city);
+    console.log(allData[0].country);
+    console.log(allData[0].departingDate);
+    //document.getElementById('latitude').innerHTML = allData[0].latitude;
+    //document.getElementById('longitude').innerHTML = allData[0].longitude;
+    document.getElementById('city').innerHTML = allData[0].city;
+    document.getElementById('comma').innerHTML = comma;
+    document.getElementById('country').innerHTML = allData[0].country;
+    document.getElementById('departingDate').innerHTML = allData[0].departingDate;
 
   }catch(error){
     console.log("error", error);
