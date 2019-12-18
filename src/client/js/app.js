@@ -105,3 +105,4 @@ const updateUI = async () => {
 
 module.exports = performAction;
 module.exports = updateUI;
+module.exports = getDarkSky;
