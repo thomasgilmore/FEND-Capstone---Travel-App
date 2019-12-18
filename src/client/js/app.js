@@ -24,10 +24,10 @@ getLocation(baseURL,location, apiKey)
   postData('/wheather', {latitude : data.geonames[0].lat, longitude: data.geonames[0].lng, city: data.geonames[0].name, country: data.geonames[0].countryName, departingDate: departingDate})
   let latitude = data.geonames[0].lat;
   let longitude = data.geonames[0].lng;
-  let darkSky = 'https://api.darksky.net/forecast/3850f94f44aebe0584283d915ff18a45/';
-
+  let darkSky = 'https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/3850f94f44aebe0584283d915ff18a45/';
   getDarkSky(darkSky, latitude, comma2, longitude);
-
+  console.log("OUTSIDE OF FUNCTION!!!!");
+  console.log(data2);
   updateUI();
 });
 }
@@ -68,12 +68,11 @@ const postData = async (url='', data = {}) => {
 
 const getDarkSky = async (darkSky, latitude, comma2, longitude)=>{
 
-  const res2 = await fetch(darkSky+latitude+comma2+longitude)
-  
+  const res = await fetch(darkSky+latitude+comma2+longitude)
   try {
-    
-    const data2 = await res2.json();
-    console.log(data2);
+
+    const data2 = await res.json();
+    console.log(data2)
     return data2;
   }  catch(error) {
     console.log("error", error);
@@ -81,6 +80,24 @@ const getDarkSky = async (darkSky, latitude, comma2, longitude)=>{
   }
 }
 
+/*const getDarkSky = async (darkSky, latitude, comma2, longitude)=>{
+
+  const res = await fetch(darkSky+latitude+comma2+longitude)
+  
+  try {
+    
+    const data = await res.json();
+    console.log("INSIDE FUNCTION");
+    console.log(data);
+    //const temperatureHigh = data2.daily.data[0].temperatureHigh;
+    //const temperatureLow = data2.daily.data[0].temperatureHigh;
+    return data;
+  }  catch(error) {
+    console.log("error", error);
+    // appropriately handle the error
+  }
+}
+*/
 const updateUI = async () => {
   const request = await fetch('/all2');
   try{
