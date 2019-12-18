@@ -26,7 +26,7 @@ getLocation(baseURL,location, apiKey)
   let longitude = data.geonames[0].lng;
   let darkSky = 'https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/3850f94f44aebe0584283d915ff18a45/';
   getDarkSky(darkSky, latitude, comma2, longitude);
-  console.log("OUTSIDE OF FUNCTION!!!!");
+  console.log("OUTSIDE OF FUNCTION");
   console.log(data2);
   updateUI();
 })
