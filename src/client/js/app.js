@@ -1,9 +1,13 @@
 /* Global Variables */
 let comma = ', ';
 let comma2 = ',';
+let is = ' is ';
+let numberOfDays = 0;
+let daysAway = ' days away.';
+
 // Create a new date instance dynamically with JS
-//let d = new Date();
-//let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
+let d = new Date();
+let now = (d.getMonth() + 1)+'.'+ d.getDate()+'.'+ d.getFullYear();
               
 let baseURL = 'http://api.geonames.org/searchJSON?q=';
 let apiKey = '&maxRows=10&username=tgilmore';
@@ -13,14 +17,10 @@ let api3Key = '&image_type=photo&pretty=true';
 
 document.getElementById('generate').addEventListener('click', performAction);
 
-// $('#generate').on('click', function(e) {
-//   e.preventDefault();
-//   performAction();
-// });
-
 function performAction(e){
 const location =  document.getElementById('location').value;
 let departingDate = document.getElementById('departing').value;
+     
 getLocation(baseURL,location, apiKey)
 
 .then(function(data){
@@ -42,8 +42,6 @@ getLocation(baseURL,location, apiKey)
     //console.log(data2.daily.data[0].temperatureHigh);
     //console.log(data2.daily.data[0].temperatureLow);
     postData('/wheather', {summary : data2.daily.data[0].summary, highTemp: data2.daily.data[0].temperatureHigh, lowTemp: data2.daily.data[0].temperatureLow});
-  
-    //postData('/wheather', {summary : data2.daily.data[0].summary, temperatureHigh: data2.daily.data[0].temperatureHigh, temperatureLow: data2.daily.data[0].temperatureLow});
   });
   getPicture(api3, location, api3Key)
   .then(function(data3){
@@ -52,6 +50,7 @@ getLocation(baseURL,location, apiKey)
     //console.log(data3.hits[0].largeImageURL);
     postData('/wheather', {picture: data3.hits[0].largeImageURL});
   });
+  //The information does send back with one click because there is a setTimeout function delaying the updateUI();
   setTimeout(function(){
   console.log("RAN updateUI");
   updateUI();
@@ -61,11 +60,11 @@ getLocation(baseURL,location, apiKey)
 
 const getLocation = async (baseURL, location, key)=>{
 
-  const res = await fetch(baseURL+location+key)
+  const res = await fetch(baseURL+location+key);
   try {
 
     const data = await res.json();
-    //console.log(data)
+    //console.log(data);
     return data;
   }  catch(error) {
     console.log("error", error);
@@ -74,7 +73,7 @@ const getLocation = async (baseURL, location, key)=>{
 }
 
 const postData = async (url='', data = {}) => {
-  //console.log(data)
+  //console.log(data);
     const response = await fetch(url, {
       method: 'POST',
       credentials: 'same-origin',
@@ -95,7 +94,7 @@ const postData = async (url='', data = {}) => {
 
 const getDarkSky = async (darkSky, latitude, comma2, longitude)=>{
 
-  const res = await fetch(darkSky+latitude+comma2+longitude)
+  const res = await fetch(darkSky+latitude+comma2+longitude);
   try {
 
     const data2 = await res.json();
@@ -110,11 +109,11 @@ const getDarkSky = async (darkSky, latitude, comma2, longitude)=>{
 
 const getPicture = async (api3, location, api3Key)=>{
 
-  const res = await fetch(api3+location+api3Key)
+  const res = await fetch(api3+location+api3Key);
   try {
 
     const data3 = await res.json();
-    //console.log(data3)
+    //console.log(data3);
     return data3;
   }  catch(error) {
     console.log("error", error);
@@ -132,7 +131,7 @@ const updateUI = async () => {
     //console.log(allData[0].city);
     //console.log(allData[0].country);
     //console.log(allData[0].departingDate);
-    //console.log(allData[2].summary);
+    //console.log(allData[4].summary);
     //document.getElementById('latitude').innerHTML = allData[0].latitude;
     //document.getElementById('longitude').innerHTML = allData[0].longitude;
     document.getElementById('city').innerHTML = allData[0].city;
@@ -140,6 +139,12 @@ const updateUI = async () => {
     document.getElementById('country').innerHTML = allData[0].country;
     document.getElementById('departingDate').innerHTML = allData[0].departingDate;
     document.getElementById('picture').src = allData[2].picture;
+    document.getElementById('city2').innerHTML = allData[0].city;
+    document.getElementById('comma2').innerHTML = comma;
+    document.getElementById('country2').innerHTML = allData[0].country;
+    document.getElementById('is').innerHTML = is;
+    document.getElementById('numberOfDays').innerHTML = now;
+    document.getElementById('daysAway').innerHTML = daysAway;
     document.getElementById('weather').innerHTML = allData[4].summary;
     document.getElementById('highTemp').innerHTML = allData[4].highTemp;
     document.getElementById('lowTemp').innerHTML = allData[4].lowTemp;
@@ -147,7 +152,7 @@ const updateUI = async () => {
   }catch(error){
     console.log("error", error);
   }
-}
+};
 
 module.exports = performAction;
 module.exports = updateUI;
