@@ -41,7 +41,7 @@ getLocation(baseURL,location, apiKey)
   });
   getPicture(api3, location, api3Key)
   .then(function(data3){
-    //console.log("data3");
+    console.log("data3");
     //console.log(data3);
   });
   updateUI();
@@ -121,14 +121,14 @@ const updateUI = async () => {
     //console.log(allData[0].city);
     //console.log(allData[0].country);
     //console.log(allData[0].departingDate);
-    console.log(allData[2].summary);
+    //console.log(allData[2].summary);
     //document.getElementById('latitude').innerHTML = allData[0].latitude;
     //document.getElementById('longitude').innerHTML = allData[0].longitude;
     document.getElementById('city').innerHTML = allData[0].city;
     document.getElementById('comma').innerHTML = comma;
     document.getElementById('country').innerHTML = allData[0].country;
     document.getElementById('departingDate').innerHTML = allData[0].departingDate;
-    document.getElementById('weather').innerHTML = allData[2].summary;
+    //document.getElementById('weather').innerHTML = allData[2].summary;
 
   }catch(error){
     console.log("error", error);

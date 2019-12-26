@@ -53,6 +53,11 @@ function addZip (req,res){
     data.push(req.body);
     //console.log(data);
     mostRecentEntry = {
+      //latitude: req.body.latitude,
+      //longitude: req.body.longitude,
+      //city: req.body.city,
+      //country: req.body.country,
+      //departingDate: req.body.departingDate,
       //temperature: req.body.temperature,
       //date: req.body.date,
       //userResponse: req.body.userResponse,
@@ -64,9 +69,14 @@ function addZip (req,res){
 }
 
 app.post("/save", (req, res) => {
-  projectData.temp = req.body.temp;
-  projectData.date = req.body.date;
-  projectData.content = req.body.content;
+  projectData.longitude = req.body.longitude;
+  projectData.latitude = req.body.latitude;
+  projectData.city = req.body.city;
+  projectData.country = req.body.country;
+  projectData.departingDate = req.body.departingDate;
+  //projectData.temp = req.body.temp;
+  //projectData.date = req.body.date;
+  //projectData.content = req.body.content;
   res.end();
 });
 
