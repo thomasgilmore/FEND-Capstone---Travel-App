@@ -27,6 +27,10 @@ const server = app.listen(port, listening);
   };
 
 // GET route
+app.get('/', function (req, res) {
+  res.sendFiles('dist/index.html');
+})
+
 app.get('/all2', sendData);
 
 function sendData (req, res) {
@@ -49,9 +53,9 @@ function addZip (req,res){
     data.push(req.body);
     //console.log(data);
     mostRecentEntry = {
-      temperature: req.body.temperature,
-      date: req.body.date,
-      userResponse: req.body.userResponse,
+      //temperature: req.body.temperature,
+      //date: req.body.date,
+      //userResponse: req.body.userResponse,
     };
 
     data.push(mostRecentEntry);
