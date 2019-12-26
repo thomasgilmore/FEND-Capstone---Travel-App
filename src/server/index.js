@@ -69,11 +69,11 @@ function addZip (req,res){
 }
 
 app.post("/save", (req, res) => {
-  projectData.longitude = req.body.longitude;
-  projectData.latitude = req.body.latitude;
-  projectData.city = req.body.city;
-  projectData.country = req.body.country;
-  projectData.departingDate = req.body.departingDate;
+  //projectData.longitude = req.body.longitude;
+  //projectData.latitude = req.body.latitude;
+  //projectData.city = req.body.city;
+  //projectData.country = req.body.country;
+  //projectData.departingDate = req.body.departingDate;
   //projectData.temp = req.body.temp;
   //projectData.date = req.body.date;
   //projectData.content = req.body.content;

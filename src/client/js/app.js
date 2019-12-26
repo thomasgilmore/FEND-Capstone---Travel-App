@@ -13,15 +13,19 @@ let api3Key = '&image_type=photo&pretty=true';
 
 document.getElementById('generate').addEventListener('click', performAction);
 
+// $('#generate').on('click', function(e) {
+//   e.preventDefault();
+//   performAction();
+// });
+
 function performAction(e){
 const location =  document.getElementById('location').value;
 let departingDate = document.getElementById('departing').value;
 getLocation(baseURL,location, apiKey)
 
 .then(function(data){
-  //console.log("OUTSIDE");
-  //console.log(data3);
-  //console.log(data);
+  console.log("data");
+  console.log(data);
   //console.log(data.geonames[0].lat);
   //console.log(data.geonames[0].lng);
   //console.log(data.geonames[0].name);
@@ -32,19 +36,26 @@ getLocation(baseURL,location, apiKey)
   let darkSky = 'https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/3850f94f44aebe0584283d915ff18a45/';
   getDarkSky(darkSky, latitude, comma2, longitude)
   .then(function(data2){
-    //console.log("OUTSIDE OF FUNCTION");
-    //console.log(data2);
+    console.log("data2");
+    console.log(data2);
     //console.log(data2.daily.data[0].summary);
     //console.log(data2.daily.data[0].temperatureHigh);
     //console.log(data2.daily.data[0].temperatureLow);
-    postData('/wheather', {summary : data2.daily.data[0].summary, temperatureHigh: data2.daily.data[0].temperatureHigh, temperatureLow: data2.daily.data[0].temperatureLow});
+    postData('/wheather', {summary : data2.daily.data[0].summary, highTemp: data2.daily.data[0].temperatureHigh, lowTemp: data2.daily.data[0].temperatureLow});
+  
+    //postData('/wheather', {summary : data2.daily.data[0].summary, temperatureHigh: data2.daily.data[0].temperatureHigh, temperatureLow: data2.daily.data[0].temperatureLow});
   });
   getPicture(api3, location, api3Key)
   .then(function(data3){
     console.log("data3");
-    //console.log(data3);
+    console.log(data3);
+    //console.log(data3.hits[0].largeImageURL);
+    postData('/wheather', {picture: data3.hits[0].largeImageURL});
   });
+  setTimeout(function(){
+  console.log("RAN updateUI");
   updateUI();
+}, 1000);
 });
 }
 
@@ -128,7 +139,10 @@ const updateUI = async () => {
     document.getElementById('comma').innerHTML = comma;
     document.getElementById('country').innerHTML = allData[0].country;
     document.getElementById('departingDate').innerHTML = allData[0].departingDate;
-    //document.getElementById('weather').innerHTML = allData[2].summary;
+    document.getElementById('picture').src = allData[2].picture;
+    document.getElementById('weather').innerHTML = allData[4].summary;
+    document.getElementById('highTemp').innerHTML = allData[4].highTemp;
+    document.getElementById('lowTemp').innerHTML = allData[4].lowTemp;
 
   }catch(error){
     console.log("error", error);

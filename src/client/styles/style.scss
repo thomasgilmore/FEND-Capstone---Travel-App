@@ -19,6 +19,7 @@ body{
 
 .tripCard{
     background-color: pink;
+    width: 90vw;
 }
 
 .tripInfo{
@@ -85,6 +86,12 @@ button{
 }
 h1{
     font-size: 36px;
+}
+
+h2, 
+h3{
+    margin-block-start: .25em;
+    margin-block-end: .25em;
 }
 
 textarea{
