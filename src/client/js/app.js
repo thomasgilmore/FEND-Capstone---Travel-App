@@ -143,15 +143,15 @@ const updateUI = async () => {
     document.getElementById('country').innerHTML = allData[0].country;
     document.getElementById('departingDate').innerHTML = allData[0].departingDate;
     document.getElementById('picture').src = allData[2].picture;
+    document.getElementById('weather').innerHTML = allData[4].summary;
+    document.getElementById('highTemp').innerHTML = allData[4].highTemp;
+    document.getElementById('lowTemp').innerHTML = allData[4].lowTemp;
     document.getElementById('city2').innerHTML = allData[0].city;
     document.getElementById('comma2').innerHTML = comma;
     document.getElementById('country2').innerHTML = allData[0].country;
     document.getElementById('is').innerHTML = is;
     document.getElementById('numberOfDays').innerHTML = numberOfDays;
     document.getElementById('daysAway').innerHTML = daysAway;
-    document.getElementById('weather').innerHTML = allData[4].summary;
-    document.getElementById('highTemp').innerHTML = allData[4].highTemp;
-    document.getElementById('lowTemp').innerHTML = allData[4].lowTemp;
 
   }catch(error){
     console.log("error", error);
