@@ -1,5 +1,8 @@
 # Weather-Journal App Project
 
+## How to Run Project
+After the project is download as a zip. To run the project in the terminal I first run npm run build-prod and than npm start run. When you type in a location only type in a city. 
+
 ## Overview
 This project requires you to create an asynchronous web app that uses Web API and user data to dynamically update the UI. 
 
