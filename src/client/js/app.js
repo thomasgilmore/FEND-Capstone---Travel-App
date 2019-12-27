@@ -7,8 +7,10 @@ let daysAway = ' days away.';
 
 // Create a new date instance dynamically with JS
 let d = new Date();
-let now = (d.getMonth() + 1)+'.'+ d.getDate()+'.'+ d.getFullYear();
-              
+let now = (d.getMonth() + 1)+'/'+ d.getDate()+'/'+ d.getFullYear();
+
+const daysDifference = (date1, date2) => Math.ceil(Math.abs(new Date(date2) - new Date(date1)) / (1000 * 60 * 60 * 24));
+
 let baseURL = 'http://api.geonames.org/searchJSON?q=';
 let apiKey = '&maxRows=10&username=tgilmore';
 
@@ -20,7 +22,9 @@ document.getElementById('generate').addEventListener('click', performAction);
 function performAction(e){
 const location =  document.getElementById('location').value;
 let departingDate = document.getElementById('departing').value;
-     
+  
+numberOfDays = daysDifference(now, departingDate);
+
 getLocation(baseURL,location, apiKey)
 
 .then(function(data){
@@ -143,7 +147,7 @@ const updateUI = async () => {
     document.getElementById('comma2').innerHTML = comma;
     document.getElementById('country2').innerHTML = allData[0].country;
     document.getElementById('is').innerHTML = is;
-    document.getElementById('numberOfDays').innerHTML = now;
+    document.getElementById('numberOfDays').innerHTML = numberOfDays;
     document.getElementById('daysAway').innerHTML = daysAway;
     document.getElementById('weather').innerHTML = allData[4].summary;
     document.getElementById('highTemp').innerHTML = allData[4].highTemp;
